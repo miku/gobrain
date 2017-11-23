@@ -7,7 +7,7 @@ import (
 	"math"
 )
 
-// FeedForwad struct is used to represent a simple neural network
+// FeedForward struct is used to represent a simple neural network.
 type FeedForward struct {
 	// Number of input, hidden and output nodes
 	NInputs, NHiddens, NOutputs int
@@ -24,7 +24,7 @@ type FeedForward struct {
 }
 
 /*
-Initialize the neural network;
+Init initializes the neural network;
 
 the 'inputs' value is the number of inputs the network will have,
 the 'hiddens' value is the number of hidden nodes and
@@ -59,7 +59,7 @@ func (nn *FeedForward) Init(inputs, hiddens, outputs int) {
 }
 
 /*
-Set the number of contexts to add to the network.
+SetContexts sets the number of contexts to add to the network.
 
 By default the network do not have any context so it is a simple Feed Forward network,
 when contexts are added the network behaves like an Elman's SRN (Simple Recurrent Network).
@@ -85,7 +85,7 @@ func (nn *FeedForward) SetContexts(nContexts int, initValues [][]float64) {
 }
 
 /*
-The Update method is used to activate the Neural Network.
+Update is used to activate the Neural Network.
 
 Given an array of inputs, it returns an array, of length equivalent of number of outputs, with values ranging from 0 to 1.
 */
@@ -134,8 +134,9 @@ func (nn *FeedForward) Update(inputs []float64) []float64 {
 
 	return nn.OutputActivations
 }
+
 /*
-The BackPropagate method is used, when training the Neural Network,
+BackPropagate method is used, when training the Neural Network,
 to back propagate the errors from network activation.
 */
 func (nn *FeedForward) BackPropagate(targets []float64, lRate, mFactor float64) float64 {
@@ -183,8 +184,9 @@ func (nn *FeedForward) BackPropagate(targets []float64, lRate, mFactor float64) 
 
 	return e
 }
+
 /*
-This method is used to train the Network, it will run the training operation for 'iterations' times
+Train the Network, it will run the training operation for 'iterations' times
 and return the computed errors when training.
 */
 func (nn *FeedForward) Train(patterns [][][]float64, iterations int, lRate, mFactor float64, debug bool) []float64 {
@@ -209,6 +211,7 @@ func (nn *FeedForward) Train(patterns [][][]float64, iterations int, lRate, mFac
 	return errors
 }
 
+// Test prints debug output.
 func (nn *FeedForward) Test(patterns [][][]float64) {
 	for _, p := range patterns {
 		fmt.Println(p[0], "->", nn.Update(p[0]), " : ", p[1])
